@@ -10,3 +10,6 @@ def login(request):
 
 def register(request):
     return render(request, 'register.html')
+
+def recuperar(request):
+    return render(request, 'recuperar.html')

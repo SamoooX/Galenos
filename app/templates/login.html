@@ -19,22 +19,17 @@
         <div class="container main">
             <div class="row">
                 <div class="col-md-6 side-image">
-
-                    <!-------------      image     ------------->
-
                     <img src="{% static 'img/medico.jpg' %}" alt="">
-
-
                 </div>
                 <div class="col-md-6 right">
-
                     <div class="input-box">
-
                         <header style="font-size: 30px;">Iniciar sesión</header>
+
                         <div class="input-field">
                             <input type="text" class="input" id="email" required="" autocomplete="off">
                             <label for="email">Email</label>
                         </div>
+
                         <div class="input-field">
                             <input type="password" class="input" id="pass" required="">
                             <label for="pass">Password</label>
@@ -43,9 +38,12 @@
                         <div class="input-field">
                             <input type="submit" class="submit" value="Iniciar sesión">
                         </div>
-                        </form>
+
                         <div class="signin">
-                            <span>¿Aún no tienes cuenta? <a href="#">Registrate</a></span>
+                            <a href="{% url 'recuperar' %}">¿Olvidaste tu contraseña?</a>
+                        </div>
+                        <div class="signin">
+                            <span>¿Aún no tienes cuenta? <a href="{% url 'register' %}">Registrate</a></span>
                         </div>
                     </div>
                 </div>
