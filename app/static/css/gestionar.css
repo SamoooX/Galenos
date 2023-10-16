@@ -1,0 +1,31 @@
+body {
+    background-color: #e0fadb;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.form-container {
+    background-color: #aef0c0;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 50%; 
+    height: 50vh;
+    max-width: 600px; 
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}

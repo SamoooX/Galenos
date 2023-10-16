@@ -74,3 +74,6 @@ def recuperar(request):
 
 def hora(request):
     return render(request, 'hora.html')
+
+def gestionar(request):
+    return render(request, 'gestionar.html')
