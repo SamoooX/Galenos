@@ -61,7 +61,10 @@ def register(request):
             # Envia los datos a la API en formato JSON
             api_url = 'https://galenos.samgarrido.repl.co/api/pacientes/add'  # Reemplaza con la URL de tu API
             response = requests.post(api_url, data=json.dumps(user_data), headers={'Content-Type': 'application/json'})
-
+            print(f"API URL: {api_url}")
+            print(f"Request: {response.request.url}")
+            print(f"Response Status Code: {response.status_code}")
+            print(f"Response Content: {response.content}")
             if response.status_code == 201:
                 return JsonResponse({'mensaje': 'Usuario registrado con exito'})
             else:
@@ -74,3 +77,29 @@ def recuperar(request):
 
 def hora(request):
     return render(request, 'hora.html')
+
+def gestionar(request):
+    if request.method == 'POST':
+        rut = request.POST.get('rut', None).strip()
+        fecha = request.POST.get('fecha', None)
+        hora = request.POST.get('hora', None)
+
+        if rut is not None and fecha is not None and hora is not None:
+
+            # Crea un diccionario con los datos del usuario
+            user_data = {
+                'fecha': fecha,
+                'hora': hora,
+                'rut_med': rut,
+                'disponibilidad' : True
+            }
+
+            # Envia los datos a la API en formato JSON
+            api_url = 'https://galenos.samgarrido.repl.co/api/agendas/add'  # Reemplaza con la URL de tu API
+            response = requests.post(api_url, data=json.dumps(user_data), headers={'Content-Type': 'application/json'})
+
+            if response.status_code == 201:
+                return JsonResponse({'mensaje': 'Dia registrado con exito'})
+            else:
+                return JsonResponse({'mensaje': 'Error al registrar dia'})
+    return render(request, 'gestionar.html')
