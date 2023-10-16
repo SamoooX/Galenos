@@ -77,3 +77,6 @@ def hora(request):
 
 def gestionar(request):
     return render(request, 'gestionar.html')
+
+def medico(request):
+    return render(request, 'medico.html')
