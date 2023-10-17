@@ -3,7 +3,7 @@ import requests
 
 from django.shortcuts import render
 from django.contrib.auth.hashers import make_password, check_password
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
@@ -75,8 +75,71 @@ def register(request):
 def recuperar(request):
     return render(request, 'recuperar.html')
 
+def get_nombres_medicos():
+    api_url = 'https://galenos.samgarrido.repl.co/api/medicos/'
+    response = requests.get(api_url)
+    
+    if response.status_code == 200:
+        data = response.json()
+        nombres_medicos = [(medico['rut_med'], medico['nom_med']) for medico in data]
+        return nombres_medicos
+    else:
+        return []
+    
+def get_horas(rut_med, fecha):
+
+    data = {'rut_med': rut_med,
+            'fecha': fecha}
+
+    api_url = 'https://galenos.samgarrido.repl.co/api/agendas/horas'
+
+    response = requests.post(api_url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
+    
+    if response.status_code == 200:
+        data = response.json()
+        horas_disponibles = [(horas['horas']) for horas in data]
+        return horas_disponibles
+    else:
+        return []
+    
 def hora(request):
-    return render(request, 'hora.html')
+    nombres_medicos = get_nombres_medicos()
+
+    
+    """ rut_med = request.POST.get('medicos')  # Obtiene el valor del campo 'medicos' del formulario
+    fecha = request.POST.get('fecha')    """
+    """ horas_disponibles = get_horas(rut_med, fecha) """
+
+    if request.method == 'POST':
+        rut_pac = request.POST['rut']
+        rut_med = request.POST['medicos']
+        fecha = request.POST['fecha']
+        hora = request.POST['hora']
+
+        if rut_pac is not None and rut_med is not None and fecha is not None and hora is not None:
+            # Crea un diccionario con los datos de agenda
+            user_data = {
+                'fecha': fecha,
+                'hora': hora,
+                'rut_med': rut_med,
+                'rut_pac': rut_pac,
+                'costo' : 15000,
+                'estado' : False,
+                'cancelado' : False,
+            }
+
+            # Envia los datos a la API en formato JSON
+            api_url = 'https://galenos.samgarrido.repl.co/api/atenciones/add'  # Reemplaza con la URL de tu API
+            response_atencion = requests.post(api_url, data=json.dumps(user_data), headers={'Content-Type': 'application/json'})
+            
+            if response_atencion.status_code == 201:
+                return JsonResponse({'mensaje': 'Atención creada con éxito'})
+            else:
+                return JsonResponse({'mensaje': 'Error al crear la atención'}, status=500)
+        else:
+            return JsonResponse({'mensaje': 'La hora seleccionada no está disponible'}, status=400)
+
+    return render(request, 'hora.html', {'nombres_medicos': nombres_medicos})
 
 def gestionar(request):
     if request.method == 'POST':
