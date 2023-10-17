@@ -16,5 +16,6 @@ urlpatterns = [
     path('gestionar_pac/', views.gestionar_pac, name="gestionar_pac"),
     path('registrar_sec/', views.registrar_sec, name="registrar_sec"),
     path('registrar_med/', views.registrar_med, name="registrar_med"),
+    path('login_medico/', views.login_medico, name="login_medico"),
 ]
 

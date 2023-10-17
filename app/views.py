@@ -169,10 +169,6 @@ def gestionar(request):
                 return JsonResponse({'mensaje': 'Error al registrar dia'})
     return render(request, 'med/gestionar.html')
 
-def medico(request):
-    return render(request, 'med/medico.html')
-
-
 def administrador(request):
     return render(request, 'admin/administrador.html')
 
@@ -275,3 +271,38 @@ def registrar_sec(request):
                 return JsonResponse({'mensaje': 'Error al registrar secretaria'})
 
     return render(request, 'admin/registrar_sec.html')
+
+
+@csrf_exempt
+def login_medico(request):
+    if request.method == 'POST':
+        email = request.POST['email'].strip()
+        password = request.POST['password']
+
+        data = {'email': email}
+        # Realiza una solicitud a la API para obtener la contraseña almacenada
+        api_url = 'https://galenos.samgarrido.repl.co/api/medicos/login'
+        response = requests.post(api_url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
+        print(f"API URL: {api_url}")
+        print(f"Request: {response.request.url}")
+        print(f"Response Status Code: {response.status_code}")
+        print(f"Response Content: {response.content}")
+        if response.status_code == 200:
+            stored_password = response.json().get('password', '')
+           
+            if check_password(password, stored_password) and email == 'admin@admin.cl':
+                # Contraseña válida, permite el inicio de sesión
+                return redirect(to='administrador')
+            elif check_password(password, stored_password):
+                return redirect(to='medico')
+            else:
+                # Contraseña incorrecta
+                return JsonResponse({'mensaje': 'Contraseña incorrecta'})
+        else:
+            # Usuario no encontrado o error en la API
+            return JsonResponse({'mensaje': 'Medico no encontrado'})
+
+    return render(request, 'med/login_medico.html')
+
+def medico(request):
+    return render(request, 'med/medico.html')
