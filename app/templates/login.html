@@ -21,34 +21,34 @@
                 <div class="col-md-6 side-image">
                     <img src="{% static 'img/medico.jpg' %}" alt="">
                 </div>
-                <form action="{% url 'login' %}" method="post">
                     <div class="col-md-6 right">
-                        <div class="input-box">
-                            <header style="font-size: 30px;">Iniciar sesión</header>
-                
-                            <div class="input-field">
-                                <input type="text" class="input" id="email" name="email" required="" autocomplete="off">
-                                <label for="email">Email</label>
+                        <form action="{% url 'login' %}" method="post"></form>
+                            <div class="input-box">
+                                <header style="font-size: 30px;">Iniciar sesión</header>
+                    
+                                <div class="input-field">
+                                    <input type="text" class="input" id="email" name="email" required="" autocomplete="off">
+                                    <label for="email">Email</label>
+                                </div>
+                    
+                                <div class="input-field">
+                                    <input type="password" class="input" id="password" name="password" required="">
+                                    <label for="pass">Password</label>
+                                </div>
+                    
+                                <div class="input-field">
+                                    <input type="submit" class="submit" value="Iniciar sesión">
+                                </div>
+                    
+                                <div class="signin">
+                                    <a href="{% url 'recuperar' %}">¿Olvidaste tu contraseña?</a>
+                                </div>
+                                <div class="signin">
+                                    <span>¿Aún no tienes cuenta? <a href="{% url 'register' %}">Regístrate</a></span>
+                                </div>
                             </div>
-                
-                            <div class="input-field">
-                                <input type="password" class="input" id="password" name="password" required="">
-                                <label for="pass">Password</label>
-                            </div>
-                
-                            <div class="input-field">
-                                <input type="submit" class="submit" value="Iniciar sesión">
-                            </div>
-                
-                            <div class="signin">
-                                <a href="{% url 'recuperar' %}">¿Olvidaste tu contraseña?</a>
-                            </div>
-                            <div class="signin">
-                                <span>¿Aún no tienes cuenta? <a href="{% url 'register' %}">Regístrate</a></span>
-                            </div>
-                        </div>
+                        </form>
                     </div>
-                </form>
             </div>
         </div>
     </div>

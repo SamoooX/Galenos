@@ -86,7 +86,7 @@ def gestionar(request):
 
         if rut is not None and fecha is not None and hora is not None:
 
-            # Crea un diccionario con los datos del usuario
+            # Crea un diccionario con los datos de agenda
             user_data = {
                 'fecha': fecha,
                 'hora': hora,
