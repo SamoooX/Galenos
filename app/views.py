@@ -79,12 +79,6 @@ def hora(request):
     return render(request, 'hora.html')
 
 def gestionar(request):
-<<<<<<< HEAD
-    return render(request, 'gestionar.html')
-
-def medico(request):
-    return render(request, 'medico.html')
-=======
     if request.method == 'POST':
         rut = request.POST.get('rut', None).strip()
         fecha = request.POST.get('fecha', None)
@@ -109,4 +103,3 @@ def medico(request):
             else:
                 return JsonResponse({'mensaje': 'Error al registrar dia'})
     return render(request, 'gestionar.html')
->>>>>>> bfcd700aca4a7ed7795f4743c1472bbffd2e1c82
