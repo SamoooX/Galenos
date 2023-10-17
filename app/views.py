@@ -166,3 +166,6 @@ def gestionar(request):
             else:
                 return JsonResponse({'mensaje': 'Error al registrar dia'})
     return render(request, 'gestionar.html')
+
+def medico(request):
+    return render(request, 'medico.html')
