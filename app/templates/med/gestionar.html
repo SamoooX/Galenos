@@ -14,20 +14,20 @@
 
 <body>
   <div class="container">
-    <h1>Registrar Hora</h1>
+    <h1>Registrar Horario</h1>
     <form class="form-container" method="post" action="/gestionar/">
       {% csrf_token %}
       <div class="input-field">
-        <input type="text" class="input" id="rut" name="rut" required maxlength="9" pattern="\d{7,8}[\dkK]">
         <label for="rut">Rut</label>
+        <input type="text" class="input" id="rut" name="rut" required maxlength="9" pattern="\d{7,8}[\dkK]">
       </div>
       <div class="input-field">
-        <input type="date" class="input" id="fecha" name="fecha" required />
         <label for="fecha">Fecha</label>
+        <input type="date" class="input" id="fecha" name="fecha" required />
       </div>
       <div class="input-field">
-        <input type="time" class="input" id="hora" name="hora" required />
         <label for="hora">Hora</label>
+        <input type="time" class="input" id="hora" name="hora" required />
       </div>
       <div class="input-field">
         <button type="submit" class="submit">Guardar</button>

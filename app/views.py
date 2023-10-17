@@ -68,7 +68,7 @@ def register(request):
             print(f"Response Status Code: {response.status_code}")
             print(f"Response Content: {response.content}")
             if response.status_code == 201:
-                return JsonResponse({'mensaje': 'Usuario registrado con exito'})
+                return redirect(to='login')
             else:
                 return JsonResponse({'mensaje': 'Error al registrar usuario'})
 
@@ -143,31 +143,6 @@ def hora(request):
 
     return render(request, 'pac/hora.html', {'nombres_medicos': nombres_medicos})
 
-def gestionar(request):
-    if request.method == 'POST':
-        rut = request.POST.get('rut', None).strip()
-        fecha = request.POST.get('fecha', None)
-        hora = request.POST.get('hora', None)
-
-        if rut is not None and fecha is not None and hora is not None:
-
-            # Crea un diccionario con los datos de agenda
-            user_data = {
-                'fecha': fecha,
-                'hora': hora,
-                'rut_med': rut,
-                'disponibilidad' : True
-            }
-
-            # Envia los datos a la API en formato JSON
-            api_url = 'https://galenos.samgarrido.repl.co/api/agendas/add'  # Reemplaza con la URL de tu API
-            response = requests.post(api_url, data=json.dumps(user_data), headers={'Content-Type': 'application/json'})
-
-            if response.status_code == 201:
-                return JsonResponse({'mensaje': 'Dia registrado con exito'})
-            else:
-                return JsonResponse({'mensaje': 'Error al registrar dia'})
-    return render(request, 'med/gestionar.html')
 
 def administrador(request):
     return render(request, 'admin/administrador.html')
@@ -305,4 +280,47 @@ def login_medico(request):
     return render(request, 'med/login_medico.html')
 
 def medico(request):
+    if request.method == 'POST':
+        rut = request.POST.get('rut', None).strip()
+        data = {'rut_med': rut}
+        api_url = 'https://galenos.samgarrido.repl.co/api/agendas/allfechas'
+
+        headers = {'Content-Type': 'application/json'}
+        response = requests.post(api_url, data=json.dumps(data), headers=headers)
+
+        if response.status_code == 200:
+            data = response.json()
+            agendas = [(agen['fecha'], agen['hora'], agen['disponibilidad']) for agen in data]
+            print("Agendas:", agendas)
+            return render(request, 'med/medico.html', {'agendas': agendas})
+        else:
+            print("aaa")
+            return render(request, 'med/medico.html')
+
     return render(request, 'med/medico.html')
+
+def gestionar(request):
+    if request.method == 'POST':
+        rut = request.POST.get('rut', None).strip()
+        fecha = request.POST.get('fecha', None)
+        hora = request.POST.get('hora', None)
+
+        if rut is not None and fecha is not None and hora is not None:
+
+            # Crea un diccionario con los datos de agenda
+            user_data = {
+                'fecha': fecha,
+                'hora': hora,
+                'rut_med': rut,
+                'disponibilidad' : True
+            }
+
+            # Envia los datos a la API en formato JSON
+            api_url = 'https://galenos.samgarrido.repl.co/api/agendas/add'  # Reemplaza con la URL de tu API
+            response = requests.post(api_url, data=json.dumps(user_data), headers={'Content-Type': 'application/json'})
+
+            if response.status_code == 201:
+                return redirect(to='medico')
+            else:
+                return JsonResponse({'mensaje': 'Error al registrar dia'})
+    return render(request, 'med/gestionar.html')
