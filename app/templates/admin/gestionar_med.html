@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portal Médico</title>
+    <link rel="icon" href="{% static 'img/icon.jpeg' %}" />
+    <!-- css -->
+    <link rel="stylesheet" href="{% static 'css/medico.css' %}" />
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+</head>
+
+<body>
+    <header class="custom-header text-center py-4">
+        <h1>Gestion de Médicos</h1>
+    </header>
+    <div class="container text-center">
+        <h2>Medicos</h2>
+        <table class="table table-striped mx-auto">
+            <thead>
+                <tr>
+                    <th>Rut</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rut, nombre, email in nombres_medicos %}
+                <tr>
+                    <td>{{ rut }}</td>
+                    <td>{{ nombre }}</td>
+                    <td>{{ email }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-center">
+            <a href="{% url 'registrar_med' %}" class="btn btn-primary">Registrar</a>
+            <a href="#" class="btn btn-info">Modificar</a>
+            <a href="#" class="btn btn-primary">Dar de baja</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+
+</html>

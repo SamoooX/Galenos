@@ -19,17 +19,12 @@
         <div class="container main">
             <div class="row">
                 <div class="col-md-6 side-image">
-
-                    <!-------------      image     ------------->
-
                     <img src="{% static 'img/medico.jpg' %}" alt="">
-
-
                 </div>
                 <div class="col-md-6 right">
                     <div class="input-box">
-                        <header style="font-size: 30px;">Registrarse</header>
-                        <form id="registro-form" method="post" action="/register/">
+                        <header style="font-size: 30px;">Secretaria</header>
+                        <form id="registro-form" method="post" action="/registrar_sec/">
                             {% csrf_token %}
                             <div class="input-field">
                                 <input type="text" class="input" id="rut" name="rut" required maxlength="9" pattern="\d{7,8}[\dkK]">
