@@ -19,11 +19,37 @@
   </header>
   <div class="container text-center">
     <h2>Gestion de usuario</h2>
-    <div class="text-center">
-      <a href="{% url 'gestionar_med' %}" class="btn btn-primary">Gestionar Medicos</a>
-      <a href="{% url 'gestionar_sec' %}" class="btn btn-primary">Gestionar Secretarias</a>
-      <a href="{% url 'gestionar_pac' %}" class="btn btn-primary">Gestionar Pacientes</a>
-    </div>
+    <p>Bienvenido al panel de administrador.</p>
+    <div class="row">
+      <div class="col-sm-4">
+          <div class="card">
+              <div class="card-body">
+                  <h5 class="card-title">Gestionar Médicos</h5>
+                  <p class="card-text">Administra la información de los médicos.</p>
+                  <a href="{% url 'gestionar_med' %}" class="btn btn-success">Ir a Médicos</a>
+              </div>
+          </div>
+      </div>
+      <div class="col-sm-4">
+          <div class="card">
+              <div class="card-body">
+                  <h5 class="card-title">Gestionar Secretarias</h5>
+                  <p class="card-text">Administra la información de las secretarias.</p>
+                  <a href="{% url 'gestionar_sec' %}" class="btn btn-success">Ir a Secretarias</a>
+              </div>
+          </div>
+      </div>
+      <div class="col-sm-4">
+          <div class="card">
+              <div class="card-body">
+                  <h5 class="card-title">Gestionar Pacientes</h5>
+                  <p class="card-text">Administra la información de los pacientes.</p>
+                  <a href="{% url 'gestionar_pac' %}" class="btn btn-success">Ir a Pacientes</a>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
