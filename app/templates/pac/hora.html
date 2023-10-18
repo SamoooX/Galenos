@@ -46,12 +46,6 @@
                         <a class="nav-link" href="#">Sobre Nosotros</a>
                     </li>
                 </ul>
-                <form class="d-flex">
-                    <form class="d-flex">
-                        <a class="btn btn-outline-success me-2" href="{% url 'login' %}">Iniciar Sesión</a>
-                        <a class="btn btn-success" href="{% url 'register' %}">Registrarse</a>
-                    </form>
-                </form>
             </div>
         </div>
     </nav>
@@ -65,7 +59,7 @@
                         <header style="font-size: 30px;">Reservar Hora</header>
                         <form id="reserva-form" method="post">
                             <div class="input-field">
-                                <input type="text" class="input" id="rut" name="rut" required>
+                                <input type="text" class="input" id="rut" name="rut" required maxlength="9" pattern="\d{7,8}[\dkK]">
                                 <label for="rut">Rut del Paciente</label>
                             </div>
 
