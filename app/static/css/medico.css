@@ -6,6 +6,35 @@
 }
 
 
+.table {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table th, .table td {
+  padding: 8px;
+  text-align: center;
+  border: 1px solid #ccc;
+}
+
+.table th {
+  background-color: #f2f2f2;
+}
+
+.table tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.table {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.table:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 
 
 
