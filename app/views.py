@@ -31,7 +31,7 @@ def login(request):
                 # Contraseña válida, permite el inicio de sesión
                 return redirect(to='administrador')
             elif check_password(password, stored_password):
-                return JsonResponse({'mensaje': 'Inicio de sesión exitoso'})
+                return redirect(to='paciente')
             else:
                 # Contraseña incorrecta
                 return JsonResponse({'mensaje': 'Contraseña incorrecta'})
@@ -324,3 +324,6 @@ def gestionar(request):
             else:
                 return JsonResponse({'mensaje': 'Error al registrar dia'})
     return render(request, 'med/gestionar.html')
+
+def paciente(request):
+    return render(request, 'pac/paciente.html')
