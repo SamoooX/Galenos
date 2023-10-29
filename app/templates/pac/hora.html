@@ -58,6 +58,7 @@
                     <div class="input-box">
                         <header style="font-size: 30px;">Reservar Hora</header>
                         <form id="reserva-form" method="post">
+                            {% csrf_token %}
                             <div class="input-field">
                                 <input type="text" class="input" id="rut" name="rut" required maxlength="9" pattern="\d{7,8}[\dkK]">
                                 <label for="rut">Rut del Paciente</label>
