@@ -107,39 +107,7 @@ def get_horas(rut_med, fecha):
 def hora(request):
     nombres_medicos = get_nombres_medicos()
 
-    
-    """ rut_med = request.POST.get('medicos')  # Obtiene el valor del campo 'medicos' del formulario
-    fecha = request.POST.get('fecha')    """
-    """ horas_disponibles = get_horas(rut_med, fecha) """
 
-    if request.method == 'POST':
-        rut_pac = request.POST['rut']
-        rut_med = request.POST['medicos']
-        fecha = request.POST['fecha']
-        hora = request.POST['hora']
-
-        if rut_pac is not None and rut_med is not None and fecha is not None and hora is not None:
-            # Crea un diccionario con los datos de agenda
-            user_data = {
-                'fecha': fecha,
-                'hora': hora,
-                'rut_med': rut_med,
-                'rut_pac': rut_pac,
-                'costo' : 15000,
-                'estado' : False,
-                'cancelado' : False,
-            }
-
-            # Envia los datos a la API en formato JSON
-            api_url = 'https://galenos.samgarrido.repl.co/api/atenciones/add'  # Reemplaza con la URL de tu API
-            response_atencion = requests.post(api_url, data=json.dumps(user_data), headers={'Content-Type': 'application/json'})
-            
-            if response_atencion.status_code == 201:
-                return JsonResponse({'mensaje': 'Atención creada con éxito'})
-            else:
-                return JsonResponse({'mensaje': 'Error al crear la atención'}, status=500)
-        else:
-            return JsonResponse({'mensaje': 'La hora seleccionada no está disponible'}, status=400)
 
     return render(request, 'pac/hora.html', {'nombres_medicos': nombres_medicos})
 
