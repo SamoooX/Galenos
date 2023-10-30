@@ -31,6 +31,28 @@ $(document).ready(function () {
     // Escuchar cambios en el combo de médicos y la fecha
     $("#medicos, #fecha").change(cargarHorasDisponibles);
 
+    function cancelarAgenda(rut_med, fecha, hora) {
+        $.ajax({
+            url: 'https://galenos.samgarrido.repl.co/api/agendas/disponibilidad',
+            type: 'PATCH',
+            data: JSON.stringify({
+                'rut_med': rut_med,
+                'fecha': fecha,
+                'hora': hora,
+                'disponibilidad': false
+            }),
+            contentType: 'application/json',
+            success: function (response) {
+                // Manejar la respuesta del servidor si es necesario
+                console.log('Cancelado exitosamente:', response);
+            },
+            error: function (error) {
+                console.log('Error al enviar los datos.');
+                console.log(error); // Puedes imprimir información adicional sobre el error en la consola
+            }
+        });
+    }
+
     function enviarDatos() {
         var rut_pac = $("#rut").val(); // Obtener el valor de rut del paciente
         var rut_med = $("#medicos").val(); // Obtener el valor del médico
@@ -61,6 +83,7 @@ $(document).ready(function () {
             contentType: 'application/json',
             success: function (response) {
                 // Manejar la respuesta del servidor si es necesario
+                cancelarAgenda(rut_med, fecha, hora);
                 console.log('Datos enviados exitosamente:', response);
             },
             error: function (xhr, status, error) {
@@ -75,4 +98,6 @@ $(document).ready(function () {
         event.preventDefault(); // Prevenir el envío del formulario por defecto
         enviarDatos(); // Llamar a la función para enviar los datos
     });
+
+
 });

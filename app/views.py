@@ -106,9 +106,7 @@ def get_horas(rut_med, fecha):
     
 def hora(request):
     nombres_medicos = get_nombres_medicos()
-
-
-
+    
     return render(request, 'pac/hora.html', {'nombres_medicos': nombres_medicos})
 
 
