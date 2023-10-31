@@ -256,14 +256,15 @@ def medico(request):
 
         if response.status_code == 200:
             data = response.json()
-            agendas = [(agen['fecha'], agen['hora'], agen['disponibilidad']) for agen in data]
+            agendas = [(agenda['fecha'], agenda['hora'], agenda['disponibilidad'], rut) for agenda in data]
             print("Agendas:", agendas)
-            return render(request, 'med/medico.html', {'agendas': agendas})
+            return render(request, 'med/medico.html', {'agendas': agendas, 'rut_consulta': rut})
         else:
             print("aaa")
             return render(request, 'med/medico.html')
 
     return render(request, 'med/medico.html')
+
 
 def gestionar(request):
     if request.method == 'POST':
