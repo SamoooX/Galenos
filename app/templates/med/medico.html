@@ -34,27 +34,30 @@
     </form>
     <table class="table table-striped mx-auto">
       <thead>
-        <tr>
-          <th>Fecha</th>
-          <th>Hora</th>
-          <th>Estado</th>
-          <th>Seleccionar</th>
-        </tr>
+          <tr>
+              <th>Rut de Consulta</th>
+              <th>Fecha</th>
+              <th>Hora</th>
+              <th>Estado</th>
+              <th>Seleccionar</th>
+          </tr>
       </thead>
       <tbody>
-        {% for agenda in agendas %}
-        <tr>
-          <td>{{ agenda.0 }}</td>
-          <td>{{ agenda.1 }}</td>
-          <td>{{ agenda.2 }}</td>
-          <td>
-            <input type="checkbox" class="agenda-checkbox" data-fecha="{{ agenda.0 }}" data-hora="{{ agenda.1 }}">
-          </td>
-        </tr>
-        {% endfor %}
+          {% for agenda in agendas %}
+          <tr>
+              <td>{{ agenda.3 }}</td> <!-- Mostrar el rut de consulta -->
+              <td>{{ agenda.0 }}</td>
+              <td>{{ agenda.1 }}</td>
+              <td>{{ agenda.2 }}</td>
+              <td>
+                  <input type="checkbox" class="agenda-checkbox" data-rut="{{ agenda.3 }}" data-fecha="{{ agenda.0 }}" data-hora="{{ agenda.1 }}">
+              </td>
+          </tr>
+          {% endfor %}
       </tbody>
-    </table>
-    <button id="cambiar-disponibilidad">Cambiar Disponibilidad</button>
+  </table>
+    <button id="no-disponible">No Disponible</button>
+    <button id="disponible">Disponible</button>
     
     <div class="text-center">
       <a href="{% url 'gestionar' %}" class="btn btn-primary">Agregar Citas</a>
