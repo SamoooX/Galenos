@@ -60,7 +60,8 @@
                         <form id="reserva-form" method="post">
                             {% csrf_token %}
                             <div class="input-field">
-                                <input type="text" class="input" id="rut" name="rut" required maxlength="9" pattern="\d{7,8}[\dkK]">
+                                <input type="text" class="input" id="rut" name="rut" required maxlength="9"
+                                    pattern="\d{7,8}[\dkK]">
                                 <label for="rut">Rut del Paciente</label>
                             </div>
 
@@ -73,17 +74,26 @@
                                 </select>
                             </div>
 
+
+                            <div id="carouselFechas" class="carousel slide" data-ride="carousel">
+                                <div id="carouselExample" class="carousel slide">
+                                    <div class="carousel-inner">
+
+                                    </div>
+                                    <button class="carousel-control-prev" type="button"
+                                        data-bs-target="#carouselExample" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                        data-bs-target="#carouselExample" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="input-field mt-4">
-                                        <label for="fecha">Fecha de la Cita</label><br>
-                                        <input type="date" class="input" id="fecha" name="fecha" required>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <br>
-                                    <br>
                                     <select class="input" id="hora" name="hora" required>
                                         <option value="">Selecciona una hora</option>
                                     </select>

@@ -1,8 +1,68 @@
 $(document).ready(function () {
+    var rut_med = $("#medicos").val();
+    var fechaSeleccionada; 
+    function cargarFechasIniciales() {
+        $.ajax({
+            url: 'https://galenos.samgarrido.repl.co/api/agendas/fechas',
+            type: 'POST',
+            data: JSON.stringify({
+                'rut_med': rut_med
+            }),
+            contentType: 'application/json',
+            success: function (data) {
+                cargarFechasEnCarrousel(data.fechas);
+            },
+            error: function (error) {
+                console.log('Error al cargar las fechas disponibles.');
+                console.log(error);
+            }
+        });
+    }
+
+    function cargarFechasEnCarrousel(fechas) {
+        var dateCarousel = $(".carousel-inner");
+        dateCarousel.empty();
+        var groupCounter = 0;
+
+        // Divide las fechas en grupos de 5
+        for (var i = 0; i < fechas.length; i++) {
+            var fecha = fechas[i];
+
+            // Crea un nuevo grupo de fechas si se han agregado 5
+            if (i % 5 === 0) {
+                groupCounter++;
+                var dateItem = $("<div>").addClass("carousel-item text-center");
+                if (groupCounter === 1) {
+                    dateItem.addClass("active");
+                }
+                dateCarousel.append(dateItem);
+            }
+            var dateItem = dateCarousel.children().eq(groupCounter - 1);
+            var div = $("<div>").addClass("row row-cols-1 row-cols-md-3 g-4");
+            var col = $("<div>").addClass("col text-center");
+            var card = $("<div>").addClass("card me-3 mb-3");
+            var cardBody = $("<div>").addClass("card-body");
+            var cardText = $("<div>").addClass("card-text");
+            cardText.text(fecha);
+            cardBody.append(cardText);
+            card.append(cardBody);
+            col.append(card)
+            div.append(col)
+            dateItem.append(div);
+
+            card.on("click", function() {
+                fechaSeleccionada = $(this).find(".card-body").text();
+                // Llama a la función para cargar las horas disponibles con la fecha seleccionada
+                cargarHorasDisponibles(fechaSeleccionada, rut_med);
+              });
+        }
+    }
+
+
+
+
     // Función para cargar horas disponibles
-    function cargarHorasDisponibles() {
-        var rut_med = $("#medicos").val();
-        var fecha = $("#fecha").val();
+    function cargarHorasDisponibles(fecha, rut_med) {
 
         $.ajax({
             url: 'https://galenos.samgarrido.repl.co/api/agendas/horas',
@@ -29,7 +89,10 @@ $(document).ready(function () {
     }
 
     // Escuchar cambios en el combo de médicos y la fecha
-    $("#medicos, #fecha").change(cargarHorasDisponibles);
+    $("#medicos").change(function () {
+        rut_med = $(this).val();
+        cargarFechasIniciales();
+    });
 
     function cancelarAgenda(rut_med, fecha, hora) {
         $.ajax({
@@ -56,7 +119,7 @@ $(document).ready(function () {
     function enviarDatos() {
         var rut_pac = $("#rut").val(); // Obtener el valor de rut del paciente
         var rut_med = $("#medicos").val(); // Obtener el valor del médico
-        var fecha = $("#fecha").val(); // Obtener el valor de la fecha
+        var fecha = fechaSeleccionada; // Obtener el valor de la fecha
         var hora = $("#hora").val(); // Obtener el valor de la hora
 
         console.log(rut_pac)
@@ -70,9 +133,9 @@ $(document).ready(function () {
             'rut_med': rut_med,
             'rut_pac': rut_pac,
             'rut_sec': 728364152,
-            'costo' : 15000,
-            'estado' : false,
-            'cancelado' : false
+            'costo': 15000,
+            'estado': false,
+            'cancelado': false
         };
 
         // Enviar los datos al servidor en formato JSON
