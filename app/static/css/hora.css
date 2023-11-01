@@ -152,3 +152,19 @@ span a:hover{
         width: 100%;
     }
 }
+
+.carousel-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    height: 100%;
+}
+
+.card {
+    width: 8rem; /* Ancho más pequeño */
+    margin-right: 5px; /* Espacio entre las cards */
+    font-size: 12px; /* Tamaño de fuente más pequeño */
+    cursor: pointer !important;
+}
+

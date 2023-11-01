@@ -294,3 +294,35 @@ def gestionar(request):
 
 def paciente(request):
     return render(request, 'pac/paciente.html')
+
+def secretaria(request):
+    return render(request, 'sec/secretaria.html')
+
+def gestionarAtencion(request):
+    return render(request, 'sec/gestionarAtencion.html')
+
+def gestionarAgenda(request):
+    if request.method == 'POST':
+        rut = request.POST.get('rut', None).strip()
+        data = {'rut_med': rut}
+        api_url = 'https://galenos.samgarrido.repl.co/api/agendas/allfechas'
+
+        headers = {'Content-Type': 'application/json'}
+        response = requests.post(api_url, data=json.dumps(data), headers=headers)
+
+        if response.status_code == 200:
+            data = response.json()
+            agendas = [(agenda['fecha'], agenda['hora'], agenda['disponibilidad'], rut) for agenda in data]
+            print("Agendas:", agendas)
+            return render(request, 'sec/gestionarAgenda.html', {'agendas': agendas, 'rut_consulta': rut})
+        else:
+            print("aaa")
+            return render(request, 'sec/gestionarAgenda.html')
+    return render(request, 'sec/gestionarAgenda.html')
+
+def generarAgenda(request):
+    return render(request, 'sec/generarAgenda.html')
+
+def agregarAtencion(request):
+    nombres_medicos = get_nombres_medicos()
+    return render(request, 'sec/agregarAtencion.html', {'nombres_medicos': nombres_medicos})

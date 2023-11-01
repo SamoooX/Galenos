@@ -18,5 +18,10 @@ urlpatterns = [
     path('registrar_med/', views.registrar_med, name="registrar_med"),
     path('login_medico/', views.login_medico, name="login_medico"),
     path('paciente/', views.paciente, name="paciente"),
+    path('secretaria/', views.secretaria, name="secretaria"),
+    path('gestionarAtencion/', views.gestionarAtencion, name="gestionarAtencion"),
+    path('gestionarAgenda/', views.gestionarAgenda, name="gestionarAgenda"),
+    path('generarAgenda/', views.generarAgenda, name="generarAgenda"),
+    path('agregarAtencion/', views.agregarAtencion, name="agregarAtencion"),
 ]
 
