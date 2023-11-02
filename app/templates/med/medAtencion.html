@@ -18,11 +18,11 @@
 
 <body>
   <header class="custom-header text-center py-4">
-    <h1>Secretaria</h1>
+    <h1>Paciente</h1>
   </header>
   <div class="container text-center">
     <h2>Horas Agendadas</h2>
-    <form action="/gestionarAtencion/" method="post">
+    <form action="/gestionarHoras/" method="post">
       {% csrf_token %}
       <div class="input-field">
         <label for="rut">Rut</label>

@@ -299,6 +299,22 @@ def secretaria(request):
     return render(request, 'sec/secretaria.html')
 
 def gestionarAtencion(request):
+    if request.method == 'POST':
+        rut = request.POST.get('rut', None).strip()
+        data = {'rut_pac': rut}
+        api_url = 'https://galenos.samgarrido.repl.co/api/atenciones/allatenciones'
+
+        headers = {'Content-Type': 'application/json'}
+        response = requests.post(api_url, data=json.dumps(data), headers=headers)
+
+        if response.status_code == 200:
+            data = response.json()
+            agendas = [(agenda['fecha'], agenda['hora'], agenda['rut_med'], agenda['rut_pac'], agenda['rut_sec'], agenda['costo'], agenda['estado'], agenda['cancelado']) for agenda in data]
+            print("Agendas:", agendas)
+            return render(request, 'sec/gestionarAtencion.html', {'agendas': agendas})
+        else:
+            print("aaa")
+            return render(request, 'sec/gestionarAtencion.html')
     return render(request, 'sec/gestionarAtencion.html')
 
 def gestionarAgenda(request):
@@ -326,3 +342,23 @@ def generarAgenda(request):
 def agregarAtencion(request):
     nombres_medicos = get_nombres_medicos()
     return render(request, 'sec/agregarAtencion.html', {'nombres_medicos': nombres_medicos})
+
+
+def gestionarHoras(request):
+    if request.method == 'POST':
+        rut = request.POST.get('rut', None).strip()
+        data = {'rut_pac': rut}
+        api_url = 'https://galenos.samgarrido.repl.co/api/atenciones/allatenciones'
+
+        headers = {'Content-Type': 'application/json'}
+        response = requests.post(api_url, data=json.dumps(data), headers=headers)
+
+        if response.status_code == 200:
+            data = response.json()
+            agendas = [(agenda['fecha'], agenda['hora'], agenda['rut_med'], agenda['rut_pac'], agenda['rut_sec'], agenda['costo'], agenda['estado'], agenda['cancelado']) for agenda in data]
+            print("Agendas:", agendas)
+            return render(request, 'pac/gestionarHoras.html', {'agendas': agendas})
+        else:
+            print("aaa")
+            return render(request, 'pac/gestionarHoras.html')
+    return render(request, 'pac/gestionarHoras.html')

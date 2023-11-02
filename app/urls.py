@@ -23,5 +23,6 @@ urlpatterns = [
     path('gestionarAgenda/', views.gestionarAgenda, name="gestionarAgenda"),
     path('generarAgenda/', views.generarAgenda, name="generarAgenda"),
     path('agregarAtencion/', views.agregarAtencion, name="agregarAtencion"),
+    path('gestionarHoras/', views.gestionarHoras, name="gestionarHoras"),
 ]
 
