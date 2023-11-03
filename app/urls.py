@@ -24,5 +24,7 @@ urlpatterns = [
     path('generarAgenda/', views.generarAgenda, name="generarAgenda"),
     path('agregarAtencion/', views.agregarAtencion, name="agregarAtencion"),
     path('gestionarHoras/', views.gestionarHoras, name="gestionarHoras"),
+    path('medAtencion/', views.medAtencion, name="medAtencion"),
+    path('enviar_correo/', views.enviar_correo_hora_fecha, name='enviar_correo'),
 ]
 

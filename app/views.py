@@ -5,6 +5,8 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.hashers import make_password, check_password
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from datetime import datetime, timedelta
+from django.core.mail import send_mail
 # Create your views here.
 
 def index(request):
@@ -47,8 +49,9 @@ def register(request):
         nombre = request.POST.get('nombre', None)
         email = request.POST.get('email', None).strip()
         password = request.POST.get('password', None)
+        password2 = request.POST.get('password2', None)
 
-        if rut is not None and nombre is not None and email is not None and password is not None:
+        if rut is not None and nombre is not None and email is not None and password is not None and password == password2:
             # Hashea la contraseña
             hashed_password = make_password(password)
 
@@ -71,6 +74,10 @@ def register(request):
                 return redirect(to='login')
             else:
                 return JsonResponse({'mensaje': 'Error al registrar usuario'})
+        else:
+            mensaje_error = "Las contraseñas no coinciden."
+            print("hola")
+            return render(request, 'pac/register.html', {'mensaje_error': mensaje_error})
 
     return render(request, 'pac/register.html')
 
@@ -153,8 +160,9 @@ def registrar_med(request):
         nombre = request.POST.get('nombre', None)
         email = request.POST.get('email', None).strip()
         password = request.POST.get('password', None)
+        password2 = request.POST.get('password2', None)
 
-        if rut is not None and nombre is not None and email is not None and password is not None:
+        if rut is not None and nombre is not None and email is not None and password is not None and password == password2:
             # Hashea la contraseña
             hashed_password = make_password(password)
 
@@ -177,6 +185,10 @@ def registrar_med(request):
                 return JsonResponse({'mensaje': 'Medico registrado con exito'})
             else:
                 return JsonResponse({'mensaje': 'Error al registrar medico'})
+        else:
+            mensaje_error = "Las contraseñas no coinciden."
+            print("hola")
+            return render(request, 'admin/registrar_med.html', {'mensaje_error': mensaje_error})
 
     return render(request, 'admin/registrar_med.html')
 
@@ -186,8 +198,9 @@ def registrar_sec(request):
         nombre = request.POST.get('nombre', None)
         email = request.POST.get('email', None).strip()
         password = request.POST.get('password', None)
+        password2 = request.POST.get('password2', None)
 
-        if rut is not None and nombre is not None and email is not None and password is not None:
+        if rut is not None and nombre is not None and email is not None and password is not None and password == password2:
             # Hashea la contraseña
             hashed_password = make_password(password)
 
@@ -210,6 +223,10 @@ def registrar_sec(request):
                 return JsonResponse({'mensaje': 'Secretaria registrado con exito'})
             else:
                 return JsonResponse({'mensaje': 'Error al registrar secretaria'})
+        else:
+            mensaje_error = "Las contraseñas no coinciden."
+            print("hola")
+            return render(request, 'admin/registrar_sec.html', {'mensaje_error': mensaje_error})
 
     return render(request, 'admin/registrar_sec.html')
 
@@ -336,7 +353,61 @@ def gestionarAgenda(request):
             return render(request, 'sec/gestionarAgenda.html')
     return render(request, 'sec/gestionarAgenda.html')
 
+def obtener_feriados():
+    # Hacer una solicitud GET a la API de feriados y obtener la lista de feriados en formato JSON
+    api_url = 'https://apis.digital.gob.cl/fl/feriados/2023'
+    response = requests.get(api_url)
+    if response.status_code == 200:
+        feriados = response.json()
+    else:
+        feriados = []
+
+    # Extraer las fechas de los feriados
+    fechas_feriados = [feriado['fecha'] for feriado in feriados]
+
+    return fechas_feriados
+
 def generarAgenda(request):
+    if request.method == 'POST':
+        rut = request.POST.get('rut', None).strip()
+        if rut is not None:
+            # Obten la fecha de inicio (hoy)
+            fecha_inicio = datetime.now()
+            
+            # Calcula la fecha de finalización, 3 meses a partir de hoy
+            fecha_fin = fecha_inicio + timedelta(days=16)
+            
+            # Inicializa una lista para almacenar los datos de agenda
+            agenda_data = []
+            
+            fechas_feriados = obtener_feriados()
+            
+            while fecha_inicio <= fecha_fin:
+                # Verifica si la fecha es un día laborable (lunes a viernes)
+                if fecha_inicio.weekday() < 5 and fecha_inicio.strftime('%Y-%m-%d') not in fechas_feriados:
+                    # Crea un rango horario de 8 AM a 5 PM con intervalos de 1 hora
+                    hora_inicio = datetime(fecha_inicio.year, fecha_inicio.month, fecha_inicio.day, 8, 0)
+                    hora_fin = datetime(fecha_inicio.year, fecha_inicio.month, fecha_inicio.day, 11, 0)
+                    while hora_inicio < hora_fin:
+                        agenda_data.append({
+                            'fecha': fecha_inicio.strftime('%Y-%m-%d'),
+                            'hora': hora_inicio.strftime('%H:%M'),
+                            'rut_med': rut,
+                            'disponibilidad': True
+                        })
+                        hora_inicio += timedelta(hours=1)
+
+                fecha_inicio += timedelta(days=1)
+            
+            # Envia los datos a la API en formato JSON
+            api_url = 'https://galenos.samgarrido.repl.co/api/agendas/add'  # Reemplaza con la URL de tu API
+            for agenda_entry in agenda_data:
+                response = requests.post(api_url, data=json.dumps(agenda_entry), headers={'Content-Type': 'application/json'})
+                if response.status_code != 201:
+                    return JsonResponse({'mensaje': 'Error al registrar la agenda'})
+
+            return redirect(to='secretaria')
+    
     return render(request, 'sec/generarAgenda.html')
 
 def agregarAtencion(request):
@@ -362,3 +433,35 @@ def gestionarHoras(request):
             print("aaa")
             return render(request, 'pac/gestionarHoras.html')
     return render(request, 'pac/gestionarHoras.html')
+
+def medAtencion(request):
+    if request.method == 'POST':
+        rut = request.POST.get('rut', None).strip()
+        data = {'rut_med': rut}
+        api_url = 'https://galenos.samgarrido.repl.co/api/atenciones/allatencionesmed'
+
+        headers = {'Content-Type': 'application/json'}
+        response = requests.post(api_url, data=json.dumps(data), headers=headers)
+
+        if response.status_code == 200:
+            data = response.json()
+            agendas = [(agenda['fecha'], agenda['hora'], agenda['rut_med'], agenda['rut_pac'], agenda['rut_sec'], agenda['costo'], agenda['estado'], agenda['cancelado']) for agenda in data]
+            print("Agendas:", agendas)
+            return render(request, 'med/medAtencion.html', {'agendas': agendas})
+        else:
+            print("aaa")
+            return render(request, 'med/medAtencion.html')
+    return render(request, 'med/medAtencion.html')
+
+def enviar_correo_hora_fecha(fecha, hora, email_destino):
+    subject = 'Registro de Atención'
+    message = f'Se ha registrado una atención para la fecha {fecha} a las {hora}.'
+    from_email = 'tu_correo@gmail.com'  # Remplaza con tu dirección de correo
+    recipient_list = [email_destino]  # Lista de destinatarios
+
+    try:
+        send_mail(subject, message, from_email, recipient_list)
+        return True
+    except Exception as e:
+        print(f'Error al enviar el correo: {str(e)}')
+        return False
