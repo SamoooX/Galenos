@@ -121,6 +121,7 @@ $(document).ready(function () {
         var rut_med = $("#medicos").val(); // Obtener el valor del médico
         var fecha = fechaSeleccionada; // Obtener el valor de la fecha
         var hora = $("#hora").val(); // Obtener el valor de la hora
+        var email_pac = 'mat.aninir@duocuc.cl';
 
         console.log(rut_pac)
         console.log(rut_med)
@@ -148,6 +149,7 @@ $(document).ready(function () {
                 // Manejar la respuesta del servidor si es necesario
                 cancelarAgenda(rut_med, fecha, hora);
                 console.log('Datos enviados exitosamente:', response);
+                enviarCorreo(fecha, hora, email_pac);
             },
             error: function (xhr, status, error) {
                 console.log('Error al enviar los datos.');
@@ -162,5 +164,27 @@ $(document).ready(function () {
         enviarDatos(); // Llamar a la función para enviar los datos
     });
 
-
+    function enviarCorreo(fecha, hora, correo){
+        var data = {
+            service_id: 'service_6t4foot',
+            template_id: 'template_roz16eg',
+            user_id: 'RKVwpR7cbKFlRY4IS',
+            template_params: {
+                'to_name': 'Paciente',
+                'from_name': 'Samuel',
+                'reply_to': correo,
+                'message': 'Fecha de atención' + fecha +'Hora de atención' + hora
+            }
+        };
+        
+        $.ajax('https://api.emailjs.com/api/v1.0/email/send', {
+            type: 'POST',
+            data: JSON.stringify(data),
+            contentType: 'application/json'
+        }).done(function() {
+            alert('Tu correo electrónico se ha enviado correctamente.');
+        }).fail(function(error) {
+            alert('¡Ups! ' + JSON.stringify(error));
+        });
+    }
 });
