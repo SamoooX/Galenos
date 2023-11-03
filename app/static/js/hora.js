@@ -1,6 +1,10 @@
 $(document).ready(function () {
     var rut_med = $("#medicos").val();
-    var fechaSeleccionada; 
+    var fechaSeleccionada;
+    var correo;
+    var nombre;
+    var horaSeleccionada;
+
     function cargarFechasIniciales() {
         $.ajax({
             url: 'https://galenos.samgarrido.repl.co/api/agendas/fechas',
@@ -120,17 +124,16 @@ $(document).ready(function () {
         var rut_pac = $("#rut").val(); // Obtener el valor de rut del paciente
         var rut_med = $("#medicos").val(); // Obtener el valor del médico
         var fecha = fechaSeleccionada; // Obtener el valor de la fecha
-        var hora = $("#hora").val(); // Obtener el valor de la hora
-        var email_pac = 'mat.aninir@duocuc.cl';
+        horaSeleccionada = $("#hora").val(); // Obtener el valor de la hora
 
         console.log(rut_pac)
         console.log(rut_med)
         console.log(fecha)
-        console.log(hora)
+        console.log(horaSeleccionada)
         // Crear un objeto JSON con los datos a enviar
         var datos = {
             'fecha': fecha,
-            'hora': hora,
+            'hora': horaSeleccionada,
             'rut_med': rut_med,
             'rut_pac': rut_pac,
             'rut_sec': 728364152,
@@ -147,11 +150,11 @@ $(document).ready(function () {
             contentType: 'application/json',
             success: function (response) {
                 // Manejar la respuesta del servidor si es necesario
-                cancelarAgenda(rut_med, fecha, hora);
+                cancelarAgenda(rut_med, fecha, horaSeleccionada);
+                obtenerPaciente(rut_pac);
                 console.log('Datos enviados exitosamente:', response);
-                enviarCorreo(fecha, hora, email_pac);
             },
-            error: function (xhr, status, error) {
+            error: function (error) {
                 console.log('Error al enviar los datos.');
                 console.log(error); // Puedes imprimir información adicional sobre el error en la consola
             }
@@ -164,16 +167,43 @@ $(document).ready(function () {
         enviarDatos(); // Llamar a la función para enviar los datos
     });
 
-    function enviarCorreo(fecha, hora, correo){
+    function obtenerPaciente(rut_pac) {
+        var rut_pac = $("#rut").val();
+        $.ajax({
+            url: 'https://galenos.samgarrido.repl.co/api/pacientes/datospac',
+            type: 'POST',
+            data: JSON.stringify({
+                'rut_pac': rut_pac
+            }),
+            contentType: 'application/json',
+            success: function (data) {
+                if (data.length > 0) {
+                    var paciente = data[0]; // Obtener el primer paciente si hay varios
+                     nombre = paciente.nom_pac;
+                     correo = paciente.email;
+                     console.log(nombre);
+                     console.log(correo);
+                     enviarCorreo(fechaSeleccionada, horaSeleccionada, correo, nombre);       
+                }
+            },
+            error: function (error) {
+                console.log('Error al cargar datos de paciente');
+                console.log(error);
+            }
+        });
+    }
+
+    function enviarCorreo(fecha, hora, correo, nombre){
         var data = {
             service_id: 'service_6t4foot',
             template_id: 'template_roz16eg',
             user_id: 'RKVwpR7cbKFlRY4IS',
             template_params: {
-                'to_name': 'Paciente',
-                'from_name': 'Samuel',
+                'nombre': nombre,
+                'from_name': 'Galenos',
                 'reply_to': correo,
-                'message': 'Fecha de atención' + fecha +'Hora de atención' + hora
+                'fecha': fecha,
+                'hora': hora
             }
         };
         
@@ -182,7 +212,7 @@ $(document).ready(function () {
             data: JSON.stringify(data),
             contentType: 'application/json'
         }).done(function() {
-            alert('Tu correo electrónico se ha enviado correctamente.');
+            alert('Un recordatorio se ha enviado a tu correo.');
         }).fail(function(error) {
             alert('¡Ups! ' + JSON.stringify(error));
         });
