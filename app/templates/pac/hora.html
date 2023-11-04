@@ -9,6 +9,7 @@
     <!-- css -->
     <link rel="stylesheet" href="{% static 'css/'%}hora.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'js/rut.js'%}"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js">
     </script>
     <script type="text/javascript">
@@ -68,8 +69,11 @@
                             {% csrf_token %}
                             <div class="input-field">
                                 <input type="text" class="input" id="rut" name="rut" required maxlength="9"
-                                    pattern="\d{7,8}[\dkK]">
-                                <label for="rut">Rut del Paciente</label>
+                                    pattern="\d{7,8}[\dkK]" onblur="validarRut(this.value)">
+                                <label for="rut">Rut del paciente</label>
+                            </div>
+                            <div id="mensajeValidacion" style="color: red;">
+
                             </div>
 
                             <div class="input-field">
@@ -107,7 +111,7 @@
                                 </div>
                             </div>
                             <div class="input-field">
-                                <input type="submit" class="submit" value="Continuar">
+                                <input id="botonV" type="submit" class="submit" value="Agendar Hora">
                             </div>
                         </form>
                     </div>

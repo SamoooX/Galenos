@@ -225,7 +225,6 @@ def registrar_sec(request):
                 return JsonResponse({'mensaje': 'Error al registrar secretaria'})
         else:
             mensaje_error = "Las contraseñas no coinciden."
-            print("hola")
             return render(request, 'admin/registrar_sec.html', {'mensaje_error': mensaje_error})
 
     return render(request, 'admin/registrar_sec.html')
