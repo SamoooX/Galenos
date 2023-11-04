@@ -16,10 +16,12 @@ function validarRut(rut) {
       var dvCalculado = dgv(parseInt(rutNumerico, 10));
     
       // Compara el dígito verificador calculado con el dígito verificador ingresado
-      if (dvCalculado == digitoVerificador) {
-        document.getElementById("mensajeValidacion").textContent = "RUT válido";
-      } else {
+      if (dvCalculado != digitoVerificador) {
         document.getElementById("mensajeValidacion").textContent = "RUT no válido";
+        document.getElementById("botonV").disabled = true;
+      }else{
+        document.getElementById("mensajeValidacion").textContent = "";
+        document.getElementById("botonV").disabled = false;
       }
     }
     

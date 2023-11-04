@@ -136,7 +136,7 @@ $(document).ready(function () {
             'hora': horaSeleccionada,
             'rut_med': rut_med,
             'rut_pac': rut_pac,
-            'rut_sec': 728364152,
+            'rut_sec': 121354578,
             'costo': 15000,
             'estado': false,
             'cancelado': false
