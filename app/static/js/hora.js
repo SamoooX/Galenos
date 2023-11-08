@@ -5,7 +5,7 @@ $(document).ready(function () {
     var nombre;
     var horaSeleccionada;
 
-    function cargarFechasIniciales() {
+/*     function cargarFechasIniciales() {
         $.ajax({
             url: 'https://galenos.samgarrido.repl.co/api/agendas/fechas',
             type: 'POST',
@@ -15,6 +15,33 @@ $(document).ready(function () {
             contentType: 'application/json',
             success: function (data) {
                 cargarFechasEnCarrousel(data.fechas);
+            },
+            error: function (error) {
+                console.log('Error al cargar las fechas disponibles.');
+                console.log(error);
+            }
+        });
+    } */
+
+    function cargarFechasIniciales() {
+        $.ajax({
+            url: 'https://galenos.samgarrido.repl.co/api/agendas/fechas',
+            type: 'POST',
+            data: JSON.stringify({
+                'rut_med': rut_med
+            }),
+            contentType: 'application/json',
+            success: function (data) {
+                // Obtén la fecha actual
+                var fechaActual = new Date();
+                console.log(fechaActual);
+    
+                // Filtra las fechas que son posteriores a la fecha actual
+                var fechasPosteriores = data.fechas.filter(function (fecha) {
+                    return new Date(fecha) >= fechaActual;
+                });
+    
+                cargarFechasEnCarrousel(fechasPosteriores);
             },
             error: function (error) {
                 console.log('Error al cargar las fechas disponibles.');
@@ -114,6 +141,35 @@ $(document).ready(function () {
             }
         });
     }
+/*     function cargarHorasDisponibles(fecha, rut_med) {
+        $.ajax({
+            url: 'https://galenos.samgarrido.repl.co/api/agendas/horas',
+            type: 'POST',
+            data: JSON.stringify({
+                'rut_med': rut_med,
+                'fecha': fecha
+            }),
+            contentType: 'application/json',
+            success: function (data) {
+                var selectHoras = $("#hora");
+                selectHoras.empty();
+                selectHoras.append($('<option>', { value: '', text: 'Selecciona una hora' }));
+    
+                // Obtén la hora actual
+                var horaActual = new Date().toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
+    
+                for (var i = 0; i < data.hora.length; i++) {
+                    if (data.hora[i] >= horaActual) {
+                        selectHoras.append($('<option>', { value: data.hora[i], text: data.hora[i] }));
+                    }
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log('Error al cargar las horas disponibles.');
+                console.log(error);
+            }
+        });
+    } */
 
     // Escuchar cambios en el combo de médicos y la fecha
     $("#medicos").change(function () {
