@@ -72,6 +72,7 @@ img{
     flex-direction: column;
     position: relative;
     padding: 0 10px 0 10px;
+    color: #000;
 }
 
 .input {
@@ -82,7 +83,7 @@ img{
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     outline: none;
     margin-bottom: 20px;
-    color: #2ecc71; /* Cambiado a un verde más saludable */
+    color: #000000;
 }
 
 .input-box .input-field label {
@@ -97,17 +98,18 @@ img{
 .input-field input:focus ~ label {
     top: -10px;
     font-size: 13px;
+    color: #000000;
 }
 
 .input-field input:valid ~ label {
     top: -10px;
     font-size: 13px;
-    color: #2ecc71; 
+    color: #000000; 
 }
 
 .input-field .input:focus,
 .input-field .input:valid {
-    border-bottom: 1px solid #2ecc71;
+    border-bottom: 1px solid #000000;
 }
 
 .submit {

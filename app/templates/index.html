@@ -14,9 +14,9 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <nav class="navbar navbar-expand-lg" style="color: #ffff;">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#"><img src="{% static 'img/logo.png' %}" alt="logo" width="180px" /></a>
+                <a class="navbar-brand" href="#"><img src="{% static 'img/logo.png' %}" alt="logo" width="120px" /></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -44,17 +44,99 @@
                             <a class="nav-link" href="#">Sobre Nosotros</a>
                         </li>
                     </ul>
-                    <form class="d-flex">
+                    <div class="botones">
                         <form class="d-flex">
-                            <a class="btn btn-outline-success me-2" href="{% url 'login' %}">Iniciar Sesión</a>
-                            <a class="btn btn-success" href="{% url 'register' %}">Registrarse</a>
-                            <a class="btn btn-success" href="{% url 'login_medico' %}">Inicio Medico</a>
+                            <form class="d-flex">
+                                <a class="btn btn-outline-success me-2" href="{% url 'login' %}">Iniciar Sesión</a>
+                                <a class="btn btn-success" href="{% url 'register' %}">Registrarse</a>
+                                <a class="btn btn-success" href="{% url 'login_medico' %}">Inicio Medico</a>
+                            </form>
                         </form>
-                    </form>
+                    </div>
+                    
                 </div>
             </div>
         </nav>
     </header>
+
+
+    <div class="container">
+
+
+
+        <!-- carrousel -->
+
+
+
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="{% static 'img/carrousel1.jpg' %}" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="{% static 'img/carrousel3.jpg' %}" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="{% static 'img/carrousel2.jpg' %}" class="d-block w-100" alt="...">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Siguiente</span>
+            </button>
+          </div>
+
+
+        <!-- cards  -->
+          <br>
+          <br>
+          <br>
+          <br>
+
+
+        <div class="row cards_anashe">
+            <div class="col-sm-4">
+              <div class="card">
+                <img src="{% static 'img/card1.jpg' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Sobre Nosotros</h5>
+                  <p class="card-text">En Centro Médico Galenos, nos dedicamos a proporcionar atención médica de la más alta calidad a nuestros pacientes. Con un equipo de profesionales altamente capacitados y una amplia gama de servicios, nos esforzamos por garantizar que cada paciente reciba el cuidado personalizado que merece.</p>
+                  <a href="#" class="btn" style="background-color: #109D48; color: #ffffff;">Sobre Nosotros</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="card">
+                <img src="{% static 'img/card2.jpg' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Reserva de hora</h5>
+                  <p class="card-text">En Centro Médico Galenos, entendemos que tu tiempo es valioso. Por eso, ofrecemos un sistema de reserva de horas fácil de usar que te permite programar citas con nuestros médicos en el horario que más te convenga. ¡Nunca ha sido tan fácil cuidar de tu salud!</p>
+                  <a href="#" class="btn" style="background-color: #109D48; color: #ffffff;">Reservar Hora</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="card">
+                <img src="{% static 'img/card3.jpg' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Nuestros Servicios</h5>
+                  <p class="card-text">En Centro Médico Galenos, ofrecemos una amplia gama de servicios para satisfacer todas tus necesidades de atención médica. Desde chequeos generales y servicios de emergencia hasta especialidades médicas y cirugías, nuestro objetivo es proporcionar una atención integral a todos nuestros pacientes.</p>
+                  <a href="#" class="btn" style="background-color: #109D48; color: #ffffff;">Servicios</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+    </div>
     <main>
         <section>
             <h2>¿Por qué Galenos es la mejor opción para tu salud?</h2>
@@ -74,6 +156,8 @@
     </main>
     <footer>
         <p>Derechos de autor © 2023 Centro Médico Galenos</p>
+        <p>Política de privacidad</p>
+        <p>Términos y condiciones</p>
     </footer>
 </body>
 

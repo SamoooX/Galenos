@@ -1,32 +1,193 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+*{
+    font-family: 'Poppins', sans-serif;
+}
 body {
-    background-color: #e0fadb;
+    background-color: #f5f5f5;
 }
 
-.container {
+.wrapper{
+    background: #f5f5f5;
+    padding: 0 20px 0 20px;
+}
+.main{
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    height: 100vh;
+    align-items: center;
+    min-height: 100vh;
 }
 
-.form-container {
-    background-color: #aef0c0;
-    padding: 20px;
+.row2{
+    width:  80%;
+    height: 600px;
     border-radius: 10px;
-    text-align: center;
-    width: 50%; 
-    height: 50vh;
-    max-width: 600px; 
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
+    background: #ffffff;
+    padding: 0px;
+    box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.2);
+  }
+  .text{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+  }
+  .text p{
+      color: #fff;
+      font-size: 20px; 
+  }
+  i{
+      font-weight: 400;
+      font-size: 15px;
+  }
+  .right{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+  }
+  
+  
+  
+  .input-box{
+    width: 700px;
+    box-sizing: border-box;;
+  }
+  
+  .input-box header {
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 30px;
+  }
+  
+  .input-field {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      padding: 0 10px 0 10px;
+      color: #000;
+  }
+  
+  .input-field select {
+      height: 45px;
+      width: 100%;
+      background: transparent;
+      border: 0px !important;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2) !important;
+      outline: none;
+      color: #109D48;
+      margin-bottom: 20px;
+      margin-top: 30px;
+  }
+  
+  .input-field select:focus {
+      border-bottom: 1px solid #109D48;
+  }
+  
+  .input, .input-field select {
+      color: #000 !important;
+  }
+  
+  /* Personaliza la flecha del select en navegadores Webkit (Chrome, Safari) */
+  .input-field select::-webkit-calendar-picker-indicator {
+      color: #109D48;
+  }
+  
+  .input_hora {
+      margin-left: -1px !important;
+      margin-top: 50px !important;
+  }
+  
+  
+
+.input {
+    height: 45px;
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    outline: none;
+    margin-bottom: 20px;
+    color:#109D48;
 }
 
-h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
+.input-box .input-field label {
+    position: absolute;
+    top: 10px;
+    left: 14px;
+    pointer-events: none;
+    transition: .5s;
+    border: none;
+}
+
+.input-field input:focus ~ label {
+    top: -10px;
+    font-size: 13px;
+}
+
+.input-field input:valid ~ label {
+    top: -10px;
+    font-size: 13px;
+    color:#109D48; 
+}
+
+.input-field .input:focus,
+.input-field .input:valid {
+    border-bottom: 1px solid #109D48;
+}
+
+.submit {
+    border: none;
+    outline: none;
+    height: 45px;
+    color: #fff;
+    background: #109D48;
+    border-radius: 5px;
+    transition: .4s;
+}
+
+.submit:hover {
+    background: #2ecc71;
+    color: #fff;
+}
+
+ .signin{
+    text-align: center;
+    font-size: small;
+    margin-top: 25px;
+}
+span a{
+    text-decoration: none;
+    font-weight: 700;
+    color: #000;
+    transition: .5s;
+}
+span a:hover{
+    text-decoration: underline;
+    color: #000;
+}
+
+@media only screen and (max-width: 768px){
+    .side-image{
+        border-radius: 10px 10px 0 0;
+    }
+    img{
+        width: 35px;
+        position: absolute;
+        top: 20px;
+        left: 47%;
+    }
+    .text{
+        position: absolute;
+        top: 70%;
+        text-align: center;
+    }
+    .text p, i{
+        font-size: 16px;
+    }
+    .row{
+        max-width:420px;
+        width: 100%;
+    }
 }

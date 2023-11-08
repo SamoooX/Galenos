@@ -26,43 +26,66 @@ $(document).ready(function () {
     function cargarFechasEnCarrousel(fechas) {
         var dateCarousel = $(".carousel-inner");
         dateCarousel.empty();
-        var groupCounter = 0;
-
-        // Divide las fechas en grupos de 5
+    
+        // Crea un nuevo grupo de fechas
+        var dateItem = $("<div>").addClass("carousel-item text-center active");
+        dateCarousel.append(dateItem);
+    
+        // Agrega las fechas al grupo
         for (var i = 0; i < fechas.length; i++) {
             var fecha = fechas[i];
-
-            // Crea un nuevo grupo de fechas si se han agregado 5
-            if (i % 5 === 0) {
-                groupCounter++;
-                var dateItem = $("<div>").addClass("carousel-item text-center");
-                if (groupCounter === 1) {
-                    dateItem.addClass("active");
-                }
-                dateCarousel.append(dateItem);
+    
+            // Crea una nueva fila después de agregar 4 fechas
+            if (i % 4 === 0) {
+                var div = $("<div>").addClass("row row-cols-1 row-cols-md-4 g-4");
+                dateItem.append(div);
             }
-            var dateItem = dateCarousel.children().eq(groupCounter - 1);
-            var div = $("<div>").addClass("row row-cols-1 row-cols-md-3 g-4");
+    
+            var div = dateItem.find(".row").last();
             var col = $("<div>").addClass("col text-center");
-            var card = $("<div>").addClass("card me-3 mb-3");
+            var card = $("<div>").addClass("card me-3 mb-3").css({
+                "cursor": "pointer",
+                "transition": "background-color 0.3s ease"
+            });
+            
+            card.hover(
+                function() {
+                    $(this).css("background-color", "#2ecc71");
+                }, function() {
+                    if (!$(this).hasClass("selected")) {
+                        $(this).css("background-color", "");
+                    }
+                }
+            );
+            
+            card.on("click", function() {
+                $(".selected").removeClass("selected").css("background-color", ""); // Quita la selección de la tarjeta anterior
+                $(this).addClass("selected").css("background-color", "#109D48"); // Agrega la selección a la nueva tarjeta
+                fechaSeleccionada = $(this).find(".card-body").text();
+                // Llama a la función para cargar las horas disponibles con la fecha seleccionada
+                cargarHorasDisponibles(fechaSeleccionada, rut_med);
+            });
             var cardBody = $("<div>").addClass("card-body");
             var cardText = $("<div>").addClass("card-text");
             cardText.text(fecha);
             cardBody.append(cardText);
             card.append(cardBody);
             col.append(card)
-            div.append(col)
-            dateItem.append(div);
-
+            div.append(col);
+    
             card.on("click", function() {
                 fechaSeleccionada = $(this).find(".card-body").text();
                 // Llama a la función para cargar las horas disponibles con la fecha seleccionada
                 cargarHorasDisponibles(fechaSeleccionada, rut_med);
-              });
+            });
+    
+            // Crea una nueva diapositiva después de agregar 8 fechas
+            if (i % 8 === 7 && i !== fechas.length - 1) {
+                dateItem = $("<div>").addClass("carousel-item text-center");
+                dateCarousel.append(dateItem);
+            }
         }
     }
-
-
 
 
     // Función para cargar horas disponibles

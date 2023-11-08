@@ -61,11 +61,11 @@
           {% endfor %}
       </tbody>
   </table>
-    <button id="no-disponible">No Disponible</button>
-    <button id="disponible">Disponible</button>
+    <a class="btn" id="no-disponible">No disponible</a>
+    <a class="btn" id="disponible">Disponible</a>
     
     <div class="text-center">
-      <a href="{% url 'gestionar' %}" class="btn btn-primary">Agregar Citas</a>
+      <a href="{% url 'gestionar' %}" class="btn" id="agregar">Agregar Citas</a>
     </div>
   </div>
 

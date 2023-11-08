@@ -12,22 +12,37 @@
 </head>
 
 <body>
-  <div class="container">
-    <h1>Registrar Horario</h1>
-    <form class="form-container" method="post" action="/generarAgenda/">
-      {% csrf_token %}
-      <div class="input-field">
-        <label for="rut">Rut del medico</label>
-        <input type="text" class="input" id="rut" name="rut" required maxlength="9" pattern="\d{7,8}[\dkK]"
-          onblur="validarRut(this.value)">
-      </div>
-      <div id="mensajeValidacion" style="color: red;">
+  <div class="wrapper">
+    <div class="container main">
+      <div class="row2">
+        <div class="col right">
+          <div class="input-box">
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <header style="font-size: 30px;">Generar Agenda</header>
+              <form class="form-container" method="post" action="/generarAgenda/">
+                {% csrf_token %}
+                <div class="input-field">
+                  <input type="text" class="input" id="rut" name="rut" required maxlength="9"
+                      pattern="\d{7,8}[\dkK]" onblur="validarRut(this.value)">
+                  <label for="rut" style="color: #7bbc57;">Rut del médico</label>
+              </div>
+                <div id="mensajeValidacion" style="color: red; padding-left: 11px;">
 
+                </div>
+                <div class="input-field">
+                  <button id="botonV" type="submit" class="submit">Generar Agenda</button>
+                </div>
+              </form>
+          </div>
+        </div>
       </div>
-      <div class="input-field">
-        <button id="botonV" type="submit" class="submit">Generar Agenda</button>
-      </div>
-    </form>
+    </div>
+  </div>
   </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

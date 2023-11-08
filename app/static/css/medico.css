@@ -1,10 +1,91 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 /* Clase para el fondo del header */
 .custom-header {
-  background: #cdecd6;
-  padding: 20px;
+  background-color: #ffffff; /* Fondo blanco */
+  border-bottom: 30px solid #109D48; /* Línea verde en la parte inferior */
 }
 
+/* Cambia el color de las letras de los inputs a negro y el color del marcador de posición a verde */
+.input {
+  color: #000;
+}
+
+.input::placeholder {
+  color: #7BBC57;
+}
+
+.input {
+  height: 45px;
+  width: 50%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  outline: none;
+  margin-bottom: 20px;
+  color: #2ecc71; /* Cambiado a un verde más saludable */
+}
+
+.input-box .input-field label {
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  pointer-events: none;
+  transition: .5s;
+  border: none;
+}
+
+.input-field input:focus ~ label {
+  top: -10px;
+  font-size: 13px;
+}
+
+.input-field input:valid ~ label {
+  top: -10px;
+  font-size: 13px;
+  color: #2ecc71; 
+}
+
+.input-field .input:focus,
+.input-field .input:valid {
+  border-bottom: 1px solid #2ecc71;
+}
+
+.submit {
+  border: none;
+  outline: none;
+  height: 45px;
+  background: #eaf2e3;
+  border-radius: 5px;
+  transition: .4s;
+}
+
+.submit:hover {
+  background: #2ecc71;
+  color: #fff;
+}
+
+
+
+#botonV {
+  background-color: #7BBC57;
+  border-radius: .25rem;
+  color: #fff;
+  font-size: 1rem;
+  padding: 10px 25px; 
+}
+
+#no-disponible, #disponible, #agregar {
+  background-color: #7BBC57;
+  border-radius: .25rem;
+  color: #fff;
+  margin-top: 20px;
+}
+
+
+#botonV:hover, #no-disponible:hover, #disponible:hover,#agregar:active,
+#botonV:active, #no-disponible:active, #disponible:active, #agregar:hover{
+  background-color: #109D48;
+}
 
 
 

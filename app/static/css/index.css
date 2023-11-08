@@ -2,7 +2,44 @@
 /* Estilos generales */
 body {
     font-family: Arial, sans-serif;
-    background-color: #edf9eb; /* Fondo verde claro */
+    background-color: #edf9eb; 
     margin: 0;
     padding: 0;
+    
+}
+
+
+.navbar {
+    background-color: #ffffff; 
+    border-bottom: 30px solid #109D48; 
+}
+
+.nav-item {
+    margin-right: 20px;
+}
+
+.nav-link {
+    color: #000 !important;
+}
+
+
+.botones a {
+    margin-right: 10px;
+    background-color:  #109D48;
+    border: none;
+    color: #ffffff;
+}
+
+.botones a:hover {
+    background-color:  #109D48;
+}
+
+
+footer {
+    background-color: #109D48;
+    color: #ffffff; 
+    position: static;
+    left: 0;
+    bottom: 0;
+    width: 100%;
 }
