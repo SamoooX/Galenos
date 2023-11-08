@@ -379,11 +379,11 @@ def generarAgenda(request):
             # Inicializa una lista para almacenar los datos de agenda
             agenda_data = []
             
-            fechas_feriados = obtener_feriados()
+            #fechas_feriados = obtener_feriados()
             
             while fecha_inicio <= fecha_fin:
                 # Verifica si la fecha es un día laborable (lunes a viernes)
-                if fecha_inicio.weekday() < 5 and fecha_inicio.strftime('%Y-%m-%d') not in fechas_feriados:
+                if fecha_inicio.weekday() < 5 and fecha_inicio.strftime('%Y-%m-%d'): #not in fechas_feriados:
                     # Crea un rango horario de 8 AM a 5 PM con intervalos de 1 hora
                     hora_inicio = datetime(fecha_inicio.year, fecha_inicio.month, fecha_inicio.day, 8, 0)
                     hora_fin = datetime(fecha_inicio.year, fecha_inicio.month, fecha_inicio.day, 11, 0)
