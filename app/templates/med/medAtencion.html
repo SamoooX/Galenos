@@ -28,7 +28,7 @@
       <div class="input-field">
         <label for="rut">Rut medico</label>
         <input type="text" class="input" id="rut" name="rut" required maxlength="9" pattern="\d{7,8}[\dkK]"
-          onblur="validarRut(this.value)">
+          onblur="validarRut(this.value)" value="{{ rut_medico }}" disabled>
       </div>
       <div id="mensajeValidacion" style="color: red;">
 

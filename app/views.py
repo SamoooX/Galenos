@@ -7,7 +7,9 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime, timedelta
 from django.core.mail import send_mail
+from django.contrib.sessions.models import Session
 # Create your views here.
+
 
 def index(request):
     return render(request, 'index.html')
@@ -22,13 +24,11 @@ def login(request):
         # Realiza una solicitud a la API para obtener la contraseña almacenada
         api_url = 'https://galenos.samgarrido.repl.co/api/pacientes/login'
         response = requests.post(api_url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
-        print(f"API URL: {api_url}")
-        print(f"Request: {response.request.url}")
-        print(f"Response Status Code: {response.status_code}")
-        print(f"Response Content: {response.content}")
+
         if response.status_code == 200:
             stored_password = response.json().get('password', '')
-           
+            rut_global = response.json().get('rut_pac','')
+            request.session['rut_paciente'] = rut_global
             if check_password(password, stored_password) and email == 'admin@admin.cl':
                 # Contraseña válida, permite el inicio de sesión
                 return redirect(to='administrador')
@@ -112,9 +112,8 @@ def get_horas(rut_med, fecha):
         return []
     
 def hora(request):
-    nombres_medicos = get_nombres_medicos()
-    
-    return render(request, 'pac/hora.html', {'nombres_medicos': nombres_medicos})
+    rut_paciente = request.session.get('rut_paciente', '')
+    return render(request, 'pac/hora.html', {'nombres_medicos': get_nombres_medicos(), 'rut_paciente': rut_paciente})
 
 
 def administrador(request):
@@ -246,7 +245,8 @@ def login_medico(request):
         print(f"Response Content: {response.content}")
         if response.status_code == 200:
             stored_password = response.json().get('password', '')
-           
+            rut_global_med = response.json().get('rut_med','')
+            request.session['rut_medico'] = rut_global_med
             if check_password(password, stored_password) and email == 'admin@admin.cl':
                 # Contraseña válida, permite el inicio de sesión
                 return redirect(to='administrador')
@@ -262,8 +262,9 @@ def login_medico(request):
     return render(request, 'med/login_medico.html')
 
 def medico(request):
+    rut_medico = request.session.get('rut_medico', '')
     if request.method == 'POST':
-        rut = request.POST.get('rut', None).strip()
+        rut = rut_medico
         data = {'rut_med': rut}
         api_url = 'https://galenos.samgarrido.repl.co/api/agendas/allfechas'
 
@@ -274,17 +275,18 @@ def medico(request):
             data = response.json()
             agendas = [(agenda['fecha'], agenda['hora'], agenda['disponibilidad'], rut) for agenda in data]
             print("Agendas:", agendas)
-            return render(request, 'med/medico.html', {'agendas': agendas, 'rut_consulta': rut})
+            return render(request, 'med/medico.html', {'agendas': agendas, 'rut_consulta': rut, 'rut_medico': rut_medico})
         else:
             print("aaa")
-            return render(request, 'med/medico.html')
+            return render(request, 'med/medico.html', {'rut_medico': rut_medico})
 
-    return render(request, 'med/medico.html')
+    return render(request, 'med/medico.html', {'rut_medico': rut_medico})
 
 
 def gestionar(request):
+    rut_medico = request.session.get('rut_medico', '')
     if request.method == 'POST':
-        rut = request.POST.get('rut', None).strip()
+        rut = rut_medico
         fecha = request.POST.get('fecha', None)
         hora = request.POST.get('hora', None)
 
@@ -306,7 +308,7 @@ def gestionar(request):
                 return redirect(to='medico')
             else:
                 return JsonResponse({'mensaje': 'Error al registrar dia'})
-    return render(request, 'med/gestionar.html')
+    return render(request, 'med/gestionar.html', {'rut_medico': rut_medico})
 
 def paciente(request):
     return render(request, 'pac/paciente.html')
@@ -415,8 +417,9 @@ def agregarAtencion(request):
 
 
 def gestionarHoras(request):
+    rut_paciente = request.session.get('rut_paciente', '')
     if request.method == 'POST':
-        rut = request.POST.get('rut', None).strip()
+        rut = request.session.get('rut_paciente', '')
         data = {'rut_pac': rut}
         api_url = 'https://galenos.samgarrido.repl.co/api/atenciones/allatenciones'
 
@@ -427,15 +430,16 @@ def gestionarHoras(request):
             data = response.json()
             agendas = [(agenda['fecha'], agenda['hora'], agenda['rut_med'], agenda['rut_pac'], agenda['rut_sec'], agenda['costo'], agenda['estado'], agenda['cancelado']) for agenda in data]
             print("Agendas:", agendas)
-            return render(request, 'pac/gestionarHoras.html', {'agendas': agendas})
+            return render(request, 'pac/gestionarHoras.html', {'agendas': agendas, 'rut_paciente': rut_paciente})
         else:
             print("aaa")
             return render(request, 'pac/gestionarHoras.html')
-    return render(request, 'pac/gestionarHoras.html')
+    return render(request, 'pac/gestionarHoras.html', {'rut_paciente': rut_paciente})
 
 def medAtencion(request):
+    rut_medico = request.session.get('rut_medico', '')
     if request.method == 'POST':
-        rut = request.POST.get('rut', None).strip()
+        rut = rut_medico
         data = {'rut_med': rut}
         api_url = 'https://galenos.samgarrido.repl.co/api/atenciones/allatencionesmed'
 
@@ -446,11 +450,11 @@ def medAtencion(request):
             data = response.json()
             agendas = [(agenda['fecha'], agenda['hora'], agenda['rut_med'], agenda['rut_pac'], agenda['rut_sec'], agenda['costo'], agenda['estado'], agenda['cancelado']) for agenda in data]
             print("Agendas:", agendas)
-            return render(request, 'med/medAtencion.html', {'agendas': agendas})
+            return render(request, 'med/medAtencion.html', {'agendas': agendas, 'rut_medico': rut_medico})
         else:
             print("aaa")
-            return render(request, 'med/medAtencion.html')
-    return render(request, 'med/medAtencion.html')
+            return render(request, 'med/medAtencion.html', {'rut_medico': rut_medico})
+    return render(request, 'med/medAtencion.html', {'rut_medico': rut_medico})
 
 def enviar_correo_hora_fecha(fecha, hora, email_destino):
     subject = 'Registro de Atención'
