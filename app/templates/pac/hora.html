@@ -68,8 +68,8 @@
                         <form id="reserva-form" method="post">
                             {% csrf_token %}
                             <div class="input-field">
-                                <input type="text" class="input" id="rut" name="rut" required maxlength="9"
-                                    pattern="\d{7,8}[\dkK]" onblur="validarRut(this.value)">
+                                <input type="text" class="input" id="rut" name="rut" required maxlength="9" pattern="\d{7,8}[\dkK]" onblur="validarRut(this.value)"
+                                    value="{{ rut_paciente }}" disabled >
                                 <label for="rut">Rut del paciente</label>
                             </div>
                             <div id="mensajeValidacion" style="color: red;">
