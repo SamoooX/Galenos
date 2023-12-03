@@ -34,7 +34,7 @@
 
       </div>
       <div class="input-field">
-        <input id="botonV" type="submit" class="submit" value="Buscar">
+        <input id="botonV" type="submit" class="submit btn btn-success" value="Buscar">
       </div>
     </form>
     <table class="table table-striped mx-auto">
@@ -62,14 +62,27 @@
         {% endfor %}
       </tbody>
     </table>
-    <button id="no-disponible">No Disponible</button>
-    <button id="disponible">Disponible</button>
-
-    <div class="text-center">
-      <a href="{% url 'gestionar' %}" class="btn btn-primary">Agregar Citas</a>
-    </div>
-    <div class="text-center">
-      <a href="{% url 'medAtencion' %}" class="btn btn-primary">Pacientes en esperas</a>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Disponibilidad</h5>
+            <p class="card-text">Selecciona las citas que deseas cambiar su disponibilidad.</p>
+            <button id="no-disponible" class="btn btn-danger mb-2">No Disponible</button>
+            <button id="disponible" class="btn btn-success mb-2">Disponible</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Gestión de citas</h5>
+            <p class="card-text">Añade nuevas citas o revisa las citas en espera.</p>
+            <a href="{% url 'gestionar' %}" class="btn btn-success mb-2">Agregar Citas</a>
+            <a href="{% url 'medAtencion' %}" class="btn btn-success mb-2">Pacientes en esperas</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

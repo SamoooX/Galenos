@@ -19,13 +19,27 @@
   </header>
   <div class="container text-center">
     <h2>Opciones</h2>
-    <div class="text-center">
-      <a href="{% url 'hora' %}" class="btn btn-primary">Agendar Hora</a>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Agendar Hora</h5>
+                    <p class="card-text">Aquí puedes agendar una hora.</p>
+                    <a href="{% url 'hora' %}" class="btn btn-success">Agendar Hora</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Ver Horas</h5>
+                    <p class="card-text">Aquí puedes ver las horas agendadas.</p>
+                    <a href="{% url 'gestionarHoras' %}" class="btn btn-success">Ver Horas</a>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="text-center">
-      <a href="{% url 'gestionarHoras' %}" class="btn btn-primary">Ver Horas</a>
-    </div>
-  </div>
+</div>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
 </body>
