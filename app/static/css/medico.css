@@ -59,33 +59,12 @@
   transition: .4s;
 }
 
-.submit:hover {
-  background: #2ecc71;
-  color: #fff;
-}
 
 
 
-#botonV {
-  background-color: #7BBC57;
-  border-radius: .25rem;
-  color: #fff;
-  font-size: 1rem;
-  padding: 10px 25px; 
-}
-
-#no-disponible, #disponible, #agregar {
-  background-color: #7BBC57;
-  border-radius: .25rem;
-  color: #fff;
-  margin-top: 20px;
-}
 
 
-#botonV:hover, #no-disponible:hover, #disponible:hover,#agregar:active,
-#botonV:active, #no-disponible:active, #disponible:active, #agregar:hover{
-  background-color: #109D48;
-}
+
 
 
 

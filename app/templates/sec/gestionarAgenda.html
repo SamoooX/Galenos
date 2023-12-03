@@ -34,7 +34,7 @@
 
       </div>
       <div class="input-field">
-        <input id="botonV" type="submit" class="submit" value="Buscar">
+        <input id="botonV" type="submit" class="submit btn btn-success" value="Buscar">
       </div>
     </form>
     <table class="table table-striped mx-auto">
@@ -61,11 +61,25 @@
           {% endfor %}
       </tbody>
   </table>
-    <a class="btn" id="no-disponible">No disponible</a>
-    <a class="btn" id="disponible">Disponible</a>
-    
-    <div class="text-center">
-      <a href="{% url 'gestionar' %}" class="btn" id="agregar">Agregar Citas</a>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Disponibilidad</h5>
+          <p class="card-text">Selecciona las citas que deseas cambiar su disponibilidad.</p>
+          <a class="btn btn-danger" id="no-disponible">No disponible</a>
+          <a class="btn btn-success" id="disponible">Disponible</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Gestión de citas</h5>
+          <p class="card-text">Añade nuevas citas o revisa las citas en espera.</p>
+          <a href="{% url 'gestionar' %}" class="btn btn-success" id="agregar">Agregar Citas</a>
+        </div>
+      </div>
     </div>
   </div>
 
